@@ -1,39 +1,284 @@
-.sidebar {
-  left: -8rem;
-  width: 8rem;
+/* =========================================================
+   DRB 网站优化 · 动画与显示增强
+   - 动态渐变页头 / 滚动揭示 / 卡片悬停 / 平滑滚动
+   - 全部尊重 prefers-reduced-motion 无障碍偏好
+   ========================================================= */
+
+/* ---------- 1. 页面载入淡入（不依赖 JS 也能正常显示） ---------- */
+@keyframes bodyFade { from { opacity: 0; } to { opacity: 1; } }
+body { animation: bodyFade .6s ease both; }
+
+/* ---------- 2. 页头动态流动渐变 ---------- */
+#page-header {
+  background-size: 300% 300% !important;
+  animation: headerGradient 18s ease infinite;
 }
-.sidebar.on {
-  left: 0;
+@keyframes headerGradient {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
-.content.on {
-  margin-left: 0 !important;
+
+/* ---------- 3. 滚动揭示（仅当 JS 启用时隐藏，避免无 JS 时内容不可见） ---------- */
+html.js-anim .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .7s cubic-bezier(.22,.61,.36,1),
+              transform .7s cubic-bezier(.22,.61,.36,1);
+  will-change: opacity, transform;
 }
-.navbar-toggle {
-  left: 9.5rem;
+html.js-anim .reveal.in-view {
+  opacity: 1;
+  transform: none;
 }
-.search-form-wrap {
-  right: 8rem;
+
+/* ---------- 4. 卡片 / 文章悬停提升 ---------- */
+.card-widget,
+.recent-post-item,
+.article-container,
+.note,
+.flink {
+  transition: transform .3s ease, box-shadow .3s ease;
 }
-@media (min-width: 768px) {
-  .outer,
-  .wrap {
-    width: 80rem !important;
+.card-widget:hover,
+.recent-post-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 34px rgba(0,0,0,.14);
+}
+
+/* ---------- 5. 导航与菜单微交互 ---------- */
+#nav a,
+.menus_item a { transition: color .25s ease, opacity .25s ease; }
+#nav a:hover { color: #fff; opacity: .92; }
+.menus_item a:hover { color: var(--btn-bg, #49b1f5); }
+
+/* 移动端菜单遮罩：半透明暗色 + 毛玻璃模糊，让背后页面朦胧可见 */
+#menu-mask {
+  background: rgba(8, 12, 24, .38);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+/* ---------- 6. 回到顶部 / 设置按钮渐显 ---------- */
+#go-up,
+#rightside-config { transition: opacity .3s ease, transform .3s ease; }
+
+/* ---------- 7. 全局平滑滚动 ---------- */
+html { scroll-behavior: smooth; }
+
+/* ---------- 8. 图片悬停轻微缩放 ---------- */
+.article img,
+.recent-post-item img,
+.card-widget img,
+.flink img {
+  transition: transform .4s ease;
+}
+.article img:hover,
+.recent-post-item img:hover,
+.flink img:hover { transform: scale(1.02); }
+
+/* ---------- 9. 页脚文案美化（备案已移除） ---------- */
+#footer-wrap { letter-spacing: .4px; }
+.footer_custom_text { opacity: .85; }
+
+/* ---------- 10. 选区高亮配色 ---------- */
+::selection { background: rgba(73,177,245,.35); color: #000; }
+
+/* ---------- 11. 无障碍：用户偏好减少动效时全部关闭 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  html.js-anim .reveal { opacity: 1; transform: none; }
+  body { opacity: 1; }
+}
+
+/* =========================================================
+   12. 移动端菜单（#sidebar-menus 抽屉）毛玻璃重构
+   - 半透明模糊面板，背后页面朦胧可见
+   - 响应式宽度，适配各种手机屏幕尺寸
+   - 纵向堆叠菜单项 + 大点按热区，触摸友好
+   - 与现有站点配色（品牌渐变 / 主题变量）保持一致
+   - 仅作用于移动端抽屉，不影响桌面导航
+   ========================================================= */
+#sidebar-menus {
+  /* 响应式宽度：小屏取 82vw，大屏封顶 360px */
+  width: min(82vw, 360px);
+  /* 离屏位置与宽度同步，确保 .open 时 translate3d(-100%) 精准归位 */
+  right: min(-82vw, -360px);
+  padding-left: 0;
+  /* 毛玻璃：半透明白 + 强模糊 + 饱和度提升 */
+  background: rgba(255, 255, 255, .6);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(22px) saturate(180%);
+  border-left: 1px solid rgba(255, 255, 255, .45);
+  box-shadow: -12px 0 44px rgba(15, 23, 42, .25);
+  /* 触摸滚动体验 */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  /* 刘海屏安全区 */
+  padding-top: env(safe-area-inset-top, 0);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* 暗色主题下的毛玻璃抽屉 */
+[data-theme='dark'] #sidebar-menus {
+  background: rgba(18, 18, 28, .88);
+  border-left: 1px solid rgba(255, 255, 255, .12);
+  box-shadow: -12px 0 44px rgba(0, 0, 0, .65);
+  color: #fff;
+}
+
+/* 顶部头像卡片：圆角描边，呼应毛玻璃质感 */
+#sidebar-menus .avatar-img {
+  width: 92px;
+  height: 92px;
+  margin: 22px auto 12px;
+  border: 3px solid rgba(255, 255, 255, .5);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, .18);
+}
+#sidebar-menus .avatar-img img {
+  border-radius: 70px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#sidebar-menus .site-data { padding: 0 10px 16px; }
+
+/* 菜单项：纵向堆叠 + 圆角卡片 + 大点按热区 */
+#sidebar-menus .menus_items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 6px 16px 24px;
+}
+#sidebar-menus .menus_item {
+  display: block;
+  width: 100%;
+  padding: 0;
+}
+#sidebar-menus .menus_items .site-page {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 15px 18px;
+  border-radius: 14px;
+  font-size: 1.06rem;
+  line-height: 1.2;
+  color: var(--font-color);
+  background: rgba(255, 255, 255, .25);
+  /* 去掉移动端点击高亮闪烁，改用自身 :active 反馈 */
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+  touch-action: manipulation; /* 消除 300ms 点击延迟 */
+  transition: background .25s ease, transform .18s ease, color .25s ease;
+}
+#sidebar-menus .menus_items .site-page .fa-fw {
+  width: 1.4em;
+  text-align: center;
+  font-size: 1.05em;
+}
+#sidebar-menus .menus_items .site-page:hover {
+  background: rgba(73, 177, 245, .22);
+  color: var(--white);
+}
+#sidebar-menus .menus_items .site-page:active {
+  background: rgba(73, 177, 245, .32);
+  transform: scale(.97);
+}
+/* 暗色主题下的菜单项底色（提高对比度，避免文字过于微弱） */
+[data-theme='dark'] #sidebar-menus .menus_items .site-page {
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+}
+[data-theme='dark'] #sidebar-menus .menus_items .site-page:hover {
+  background: rgba(73, 177, 245, .35);
+  color: #fff;
+}
+[data-theme='dark'] #sidebar-menus .menus_items .site-page:active {
+  background: rgba(73, 177, 245, .45);
+}
+
+/* 关闭按钮：悬浮在抽屉右上角，方便单手操作 */
+#sidebar-close {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 0) + 14px);
+  right: 16px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--font-color);
+  font-size: 1.2rem;
+  background: rgba(255, 255, 255, .35);
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: background .25s ease, transform .2s ease;
+}
+#sidebar-close:active {
+  background: rgba(73, 177, 245, .3);
+  transform: scale(.92);
+}
+[data-theme='dark'] #sidebar-close {
+  background: rgba(255, 255, 255, .18);
+  color: #fff;
+}
+[data-theme='dark'] #sidebar-close:active { background: rgba(73, 177, 245, .45); }
+
+/* 顶部汉堡按钮：触摸反馈 */
+#toggle-menu {
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+#toggle-menu:active { opacity: .6; }
+
+/* 极窄屏（≤360px）进一步收紧内距，避免溢出 */
+@media screen and (max-width: 360px) {
+  #sidebar-menus .menus_items .site-page { padding: 13px 14px; font-size: 1rem; }
+  #sidebar-menus .menus_items { padding: 4px 12px 20px; }
+}
+
+/* 不支持 backdrop-filter 的浏览器：回退为更不透明的实色，保证可读 */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  #sidebar-menus { background: rgba(255, 255, 255, .94); }
+  [data-theme='dark'] #sidebar-menus { background: rgba(18, 18, 28, .97); }
+  #menu-mask { background: rgba(8, 12, 24, .55); }
+}
+
+/* =========================================================
+   13. 深浅色模式：跟随系统偏好，默认浅色
+   - 用户在页面右上角手动切换后会被记住（JS 层 localStorage）
+   - JS 加载前用 CSS 兜底，避免主题闪烁
+   ========================================================= */
+
+/* 系统深色偏好：自动应用暗色变量 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --global-bg: #0d0d0d;
+    --font-color: rgba(255, 255, 255, .82);
+    --card-bg: #121212;
+    --sidebar-bg: #121212;
+    --sidebar-menu-bg: #1f1f1f;
   }
 }
-@media (max-width: 768px) {
-  .tocbot {
-    display: none !important;
-  }
-  .sidebar {
-    left: 0;
-  }
-  .sidebar.on {
-    left: -8rem;
-  }
-  .content {
-    transform: translateX(8rem);
-  }
-  .content.on {
-    transform: translateX(0);
+/* 系统浅色偏好：默认浅色（无需额外覆盖；保留钩子供以后扩展） */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --global-bg: #fff;
+    --font-color: #4c4948;
+    --card-bg: #fff;
+    --sidebar-bg: #f6f8fa;
+    --sidebar-menu-bg: #fff;
   }
 }

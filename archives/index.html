@@ -1,12 +1,12 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>段润彬的个人网站 | 学习·语录·生活记录</title><meta name="author" content="段润彬"><meta name="copyright" content="段润彬"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
-<meta property="og:title" content="段润彬的个人网站">
-<meta property="og:url" content="https://duanrunbin.pages.dev/">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>归档 | 段润彬的个人网站</title><meta name="author" content="段润彬"><meta name="copyright" content="段润彬"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="归档">
+<meta property="og:url" content="https://duanrunbin.pages.dev/archives/">
 <meta property="og:site_name" content="段润彬的个人网站">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="/img/avatar.png">
 <meta property="article:author" content="段润彬">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="/img/avatar.png"><link rel="canonical" href="https://duanrunbin.pages.dev/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css">
+<meta name="twitter:image" content="/img/avatar.png"><link rel="canonical" href="https://duanrunbin.pages.dev/archives/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css">
   <link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
     (() => {
       
@@ -84,19 +84,18 @@
           const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
 
           if (theme === undefined) {
-            // 默认浅色；系统为深色时跟随，否则保持浅色
-            if (mediaQueryDark.matches) activateDarkMode()
-            else activateLightMode()
-            // 跟随系统主题变化
-            const onSysThemeChange = () => {
-              if (saveToLocal.get('theme') !== undefined) return
-              if (mediaQueryDark.matches) activateDarkMode()
-              else activateLightMode()
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
             }
-            if (mediaQueryDark.addEventListener) {
-              mediaQueryDark.addEventListener('change', onSysThemeChange)
-              mediaQueryLight.addEventListener('change', onSysThemeChange)
-            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
           } else {
             theme === 'light' ? activateLightMode() : activateDarkMode()
           }
@@ -153,12 +152,12 @@
     toc: true,
     rightside: false,
   },
-  autoDarkmode: false
+  autoDarkmode: true
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: '段润彬的个人网站',
+  title: '归档',
   isHighlightShrink: false,
   isToc: false,
-  pageType: 'home'
+  pageType: 'archive'
 }</script><meta name="description" content="段润彬的个人网站，记录学习生活点滴、原创语录与同学留言，分享成长路上的思考与收获。">
 <meta name="keywords" content="段润彬,个人网站,博客,语录,同学留言,学习记录,成长">
 <meta name="robots" content="index,follow">
@@ -167,7 +166,7 @@
 <meta name="referrer" content="no-referrer-when-downgrade">
 <link rel="dns-prefetch" href="//i.loli.net">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "name": "段润彬的个人网站", "alternateName": "段润彬的个人网站", "url": "https://duanrunbin.pages.dev/", "description": "段润彬的个人网站，记录学习生活点滴、原创语录与同学留言，分享成长路上的思考与收获。", "inLanguage": "zh-CN", "author": {"@type": "Person", "name": "段润彬"}}, {"@type": "Person", "name": "段润彬", "url": "https://duanrunbin.pages.dev/", "sameAs": ["https://duanrunbin.pages.dev", "https://duanrunbin.dpdns.org", "http://47.115.226.170"]}]}</script>
-</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/2025/06/08/saying/"><i class="fa-fw fa fa-navicon"></i><span> 语录</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="http://47.115.226.170:5244/"><i class="fa-fw fas fa-folder-open"></i><span> 文件</span></a></div><div class="menus_item"><a class="site-page" href="/classmate/"><i class="fa-fw fa fa-envelope"></i><span> 同学的话</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-address-card"></i><span> 关于我</span></a></div></div><div id="sidebar-close" role="button" aria-label="关闭菜单" tabindex="0"><i class="fas fa-times"></i></div></div></div><div class="page" id="body-wrap"><header class="full_page fixed" id="page-header" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">DRB-New-Website</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/2025/06/08/saying/"><i class="fa-fw fa fa-navicon"></i><span> 语录</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="http://47.115.226.170:5244/"><i class="fa-fw fas fa-folder-open"></i><span> 文件</span></a></div><div class="menus_item"><a class="site-page" href="/classmate/"><i class="fa-fw fa fa-envelope"></i><span> 同学的话</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-address-card"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">DRB-New-Website</h1><div id="site-subtitle"><span id="subtitle">一定要爱着点什么，恰似草木对光阴的钟情。</span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/06/08/saying/" title="语录">语录</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-06-07T17:04:29.015Z" title="发表于 2025-06-08 01:04:29">2025-06-08</time></span></div><div class="content">汪曾祺在《人间草木》中写道：「一定要爱着点什么，恰似草木对光阴的钟情。」他把日常烟火写成了诗——家人闲坐，灯火可亲，便是世上最好的光景。高中语文课本里的句子同样掷地有声：「沉舟侧畔千帆过，病树前头万木春。」「问渠那得清如许？为有源头活水来。」「会当凌绝顶，一览众山小。」每一句都在提醒我们：日子是慢慢过出来的，成长是一天天长出来的。更多哲思与隽语，请见 <a href="/2025/06/08/saying/">语录</a>。</div></div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/08/saying/" title="语录">语录</a><time datetime="2025-06-07T17:04:29.015Z" title="发表于 2025-06-08 01:04:29">2025-06-08</time></div></div></div></div><div class="card-widget card-archives">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/2025/06/08/saying/"><i class="fa-fw fa fa-navicon"></i><span> 语录</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="http://47.115.226.170:5244/"><i class="fa-fw fas fa-folder-open"></i><span> 文件</span></a></div><div class="menus_item"><a class="site-page" href="/classmate/"><i class="fa-fw fa fa-envelope"></i><span> 同学的话</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-address-card"></i><span> 关于我</span></a></div></div><div id="sidebar-close" role="button" aria-label="关闭菜单" tabindex="0"><i class="fas fa-times"></i></div></div></div><div class="page" id="body-wrap"><header class="not-home-page fixed" id="page-header" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">DRB-New-Website</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/2025/06/08/saying/"><i class="fa-fw fa fa-navicon"></i><span> 语录</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="http://47.115.226.170:5244/"><i class="fa-fw fas fa-folder-open"></i><span> 文件</span></a></div><div class="menus_item"><a class="site-page" href="/classmate/"><i class="fa-fw fa fa-envelope"></i><span> 同学的话</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-address-card"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title">归档</h1></div></header><main class="layout" id="content-inner"><div id="archive"><div class="article-sort-title">全部文章 - 1</div><div class="article-sort"><div class="article-sort-item year">2025</div><div class="article-sort-item no-article-cover"><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2025-06-07T17:04:29.015Z" title="发表于 2025-06-08 01:04:29">2025-06-08</time></div><a class="article-sort-item-title" href="/2025/06/08/saying/" title="语录">语录</a></div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/08/saying/" title="语录">语录</a><time datetime="2025-06-07T17:04:29.015Z" title="发表于 2025-06-08 01:04:29">2025-06-08</time></div></div></div></div><div class="card-widget card-archives">
     <div class="item-headline">
       <i class="fas fa-archive"></i>
       <span>归档</span>
@@ -187,50 +186,4 @@
       
     </ul>
   </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">1</div></div><div class="webinfo-item"><div class="item-name">运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2025-03-16T00:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-06-08T17:15:51.768Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347);"><div id="footer-wrap"><div class="copyright">&copy;2025 By 段润彬</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script>
-  <script src="/js/animations.js" defer></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
-  init: str => {
-    window.typed = new Typed('#subtitle', Object.assign({
-      strings: str,
-      startDelay: 300,
-      typeSpeed: 150,
-      loop: true,
-      backSpeed: 50,
-    }, null))
-  },
-  run: subtitleType => {
-    if (true) {
-      if (typeof Typed === 'function') {
-        subtitleType()
-      } else {
-        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
-      }
-    } else {
-      subtitleType()
-    }
-  },
-  processSubtitle: (content, extraContents = []) => {
-    if (true) {
-      const sub = ["一定要爱着点什么，恰似草木对光阴的钟情。","家人闲坐，灯火可亲。","沉舟侧畔千帆过，病树前头万木春。","不畏浮云遮望眼，自缘身在最高层。","问渠那得清如许？为有源头活水来。","纸上得来终觉浅，绝知此事要躬行。","会当凌绝顶，一览众山小。","千磨万击还坚劲，任尔东西南北风。"].slice()
-
-      if (extraContents.length > 0) {
-        sub.unshift(...extraContents)
-      }
-
-      if (typeof content === 'string') {
-        sub.unshift(content)
-      } else if (Array.isArray(content)) {
-        sub.unshift(...content)
-      }
-
-      sub.length > 0 && typedJSFn.init(sub)
-    } else {
-      document.getElementById('subtitle').textContent = typeof content === 'string' ? content :
-        (Array.isArray(content) && content.length > 0 ? content[0] : '')
-    }
-  }
-}
-btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
-</script><script>function subtitleType () {
-  typedJSFn.processSubtitle(["若能像草木一样爱着光阴，日子便不空。","四方食事，不过一碗人间烟火。","你来人间一趟，要和心爱的人一起晒晒太阳。","心有所信，方能行远。","前途似海，来日方长。","愿你出走半生，归来仍是少年。"])
-}
-typedJSFn.run(subtitleType)</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+  <script src="/js/animations.js" defer></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
