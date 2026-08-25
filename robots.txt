@@ -3,4 +3,4 @@ Allow: /
 Disallow: /404.html
 Disallow: /_backup_original/
 
-Sitemap: https://duanrunbin.pages.dev/sitemap.xml
+Sitemap: https://duanrunbin2010.github.io/sitemap.xml
